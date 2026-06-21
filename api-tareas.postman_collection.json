@@ -1,0 +1,235 @@
+{
+  "info": {
+    "_postman_id": "7b00390c-850e-40a2-8bef-f6b6bfa5f599",
+    "name": "api-tareas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54406182"
+  },
+  "item": [
+    {
+      "name": "Crear tarea",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "titulo",
+              "value": "Preparar laboratorio",
+              "type": "text",
+              "uuid": "be558e46-3834-4e7a-a8e0-fea319b8d7a5"
+            },
+            {
+              "key": "descripcion",
+              "value": "Guía 10 API REST",
+              "type": "text",
+              "uuid": "29bd65e1-117e-428b-a375-d1708d473f70"
+            },
+            {
+              "key": "vence_el",
+              "value": "2026-07-01",
+              "type": "text",
+              "uuid": "0161f57c-c776-4671-83b9-049350773304"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar tareas",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ver tarea inexistente",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas/999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Validación fallida",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "descripcion",
+              "value": "Sin titulo para forzar error",
+              "type": "text",
+              "uuid": "5fd3a774-87eb-43d7-95f0-2eb210fd56d1"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar tarea",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"titulo\": \"Tarea actualizada\",\r\n    \"completada\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar tarea",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tareas/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tareas",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
