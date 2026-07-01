@@ -25,7 +25,10 @@ class AuthController extends Controller
             'password' => $datos['password'],
         ]);
 
-        $token = $user->createToken($datos['device_name'])->plainTextToken;
+        $token = $user->createToken(
+            $datos['device_name'],
+            ['tareas:leer', 'tareas:crear', 'tareas:editar', 'tareas:borrar']
+        )->plainTextToken;
 
         return response()->json(['user' => $user, 'token' => $token], 201);
     }
@@ -46,7 +49,10 @@ class AuthController extends Controller
             ]);
         }
 
-        $token = $user->createToken($datos['device_name'])->plainTextToken;
+        $token = $user->createToken(
+            $datos['device_name'],
+            ['tareas:leer', 'tareas:crear', 'tareas:editar', 'tareas:borrar']
+        )->plainTextToken;
 
         return response()->json(['user' => $user, 'token' => $token]);
     }

@@ -19,6 +19,10 @@ class TareaController extends Controller
 
     public function store(TareaRequest $request)
     {
+        if (! $request->user()->tokenCan('tareas:crear')) {
+            abort(403, 'Este token no puede crear tareas.');
+        }
+
         $tarea = $request->user()->tareas()->create($request->validated());
 
         return (new TareaResource($tarea))
