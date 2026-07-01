@@ -1,0 +1,365 @@
+{
+  "info": {
+    "name": "api-tareas",
+    "description": "API REST de tareas con autenticacion Laravel Sanctum - GL10 & GL11 INF560",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "tarea_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "token_otro",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.collectionVariables.set('token', data.token);",
+                  "    console.log('Token guardado: ' + data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "Diego" },
+                { "key": "email", "value": "diego.gl11@uatf.edu.bo" },
+                { "key": "password", "value": "labSanctum2026" },
+                { "key": "password_confirmation", "value": "labSanctum2026" },
+                { "key": "device_name", "value": "postman-lab11" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "register"]
+            }
+          }
+        },
+        {
+          "name": "Register - Segundo usuario (para prueba 403)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.collectionVariables.set('token_otro', data.token);",
+                  "    console.log('Token del segundo usuario guardado: ' + data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "name", "value": "Valeria" },
+                { "key": "email", "value": "valeria.gl11@uatf.edu.bo" },
+                { "key": "password", "value": "labSanctum2026" },
+                { "key": "password_confirmation", "value": "labSanctum2026" },
+                { "key": "device_name", "value": "postman-lab11" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    pm.collectionVariables.set('token', data.token);",
+                  "    console.log('Token guardado: ' + data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "email", "value": "diego.gl11@uatf.edu.bo" },
+                { "key": "password", "value": "labSanctum2026" },
+                { "key": "device_name", "value": "postman-lab11" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "login"]
+            }
+          }
+        },
+        {
+          "name": "Ver usuario autenticado",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/user",
+              "host": ["{{base_url}}"],
+              "path": ["api", "user"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tareas",
+      "item": [
+        {
+          "name": "Listar tareas",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas"]
+            }
+          }
+        },
+        {
+          "name": "Crear tarea",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.collectionVariables.set('tarea_id', data.data.id);",
+                  "    console.log('tarea_id guardado: ' + data.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "titulo", "value": "Documentar flujo Sanctum GL11" },
+                { "key": "vence_el", "value": "2026-07-20" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas"]
+            }
+          }
+        },
+        {
+          "name": "Ver tarea",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas/{{tarea_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas", "{{tarea_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar tarea",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "titulo", "value": "Documentar flujo Sanctum GL11 (revisado)" },
+                { "key": "completada", "value": "true" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas/{{tarea_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas", "{{tarea_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Borrar tarea",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "{{token}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas/{{tarea_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas", "{{tarea_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pruebas de seguridad",
+      "item": [
+        {
+          "name": "Listar tareas SIN token (esperado 401)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/tareas",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas"]
+            }
+          }
+        },
+        {
+          "name": "Ver tarea ajena (esperado 403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token_otro", "value": "{{token_otro}}", "type": "string" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/tareas/{{tarea_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tareas", "{{tarea_id}}"],
+              "description": "Usa el token del SEGUNDO usuario (Valeria) para intentar ver la tarea del PRIMER usuario (Diego). Debe dar 403."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
